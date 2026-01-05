@@ -28,8 +28,18 @@ const TRAVEL_TYPES = [
 ];
 
 const MONTHS = [
-  "January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December",
 ];
 
 const BUDGETS = [
@@ -161,16 +171,15 @@ export default function PreferencesModal({
 
         {/* Actions */}
         <div className="sticky bottom-0 bg-white border-t border-neutral-200 p-6 flex gap-3 justify-end">
-          <Button
-            variant="outline"
-            onClick={handleSkip}
-            disabled={loading}
-          >
+          <Button variant="outline" onClick={handleSkip} disabled={loading}>
             Skip for Now
           </Button>
           <Button
             onClick={handleSave}
-            disabled={loading || (selectedTypes.length === 0 && !selectedMonth && !selectedBudget)}
+            disabled={
+              loading ||
+              (selectedTypes.length === 0 && !selectedMonth && !selectedBudget)
+            }
           >
             {loading ? "Saving..." : "Find Destinations"}
           </Button>

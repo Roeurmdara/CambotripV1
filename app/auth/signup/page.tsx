@@ -3,6 +3,10 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signupAction } from "./action";
 import { supabase } from "@/lib/supabase";
+import PreferencesModal, {
+  UserPreferences,
+} from "@/components/preferences-modal";
+import { saveUserPreferences } from "@/lib/preferences";
 
 export default function SignupPage() {
   const router = useRouter();
@@ -11,6 +15,8 @@ export default function SignupPage() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPreferences, setShowPreferences] = useState(false);
+  const [savingPreferences, setSavingPreferences] = useState(false);
 
   async function handleSubmit() {
     // Validate inputs
@@ -36,18 +42,48 @@ export default function SignupPage() {
 
     if (result?.error) {
       setError(result.error);
-    } else if (result?.data?.session) {
-      // Set the session on the client side if account is auto-confirmed
-      await supabase.auth.setSession(result.data.session);
-      setError("");
-      router.push("/");
-      router.refresh();
     } else {
-      setError("");
-      router.push(
-        "/auth/login?message=Check your email to confirm your account"
-      );
-      router.refresh();
+      try {
+        console.log("Signup successful, result:", result);
+        
+        // If there's a session from signup (auto-confirmed or no email confirmation),
+        // set it on the client
+        if (result?.data?.session) {
+          console.log("Setting session from signup response...");
+          await supabase.auth.setSession(result.data.session);
+        } else {
+          // No session yet - user may need to confirm email or account is auto-confirmed
+          // Try to refresh the session from storage/cookies
+          console.log("No session in response, trying to get user...");
+          const { data: { user } } = await supabase.auth.getUser();
+          console.log("Current user:", user?.id);
+        }
+        
+        console.log("Redirecting to /auth/callback...");
+        router.push("/auth/callback");
+        router.refresh();
+      } catch (error) {
+        console.error("Error during redirect:", error);
+        setError("Failed to redirect. Please try again.");
+      }
+    }
+  }
+
+  async function handleSavePreferences(preferences: UserPreferences) {
+    setSavingPreferences(true);
+    try {
+      const result = await saveUserPreferences(preferences);
+      if (result.success) {
+        router.push("/destinations");
+        router.refresh();
+      } else {
+        setError(result.error || "Failed to save preferences");
+      }
+    } catch (error) {
+      console.error("Error saving preferences:", error);
+      setError("An error occurred while saving preferences");
+    } finally {
+      setSavingPreferences(false);
     }
   }
 
@@ -109,6 +145,16 @@ export default function SignupPage() {
             </a>
           </p>
         </div>
+
+        <PreferencesModal
+          isOpen={showPreferences}
+          onClose={() => {
+            setShowPreferences(false);
+            router.push("/destinations");
+            router.refresh();
+          }}
+          onSave={handleSavePreferences}
+        />
       </div>
     </div>
   );

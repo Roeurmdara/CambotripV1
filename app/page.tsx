@@ -9,7 +9,7 @@ export default function Home() {
   return (
     <>
       <Navigation />
-<main className="min-h-screen flex flex-col gap-[2px] font-light">
+<main className="min-h-screen flex flex-col  font-light">
   <Hero />
   <DestinationPreview />
   <Journey />

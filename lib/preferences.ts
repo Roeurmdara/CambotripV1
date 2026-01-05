@@ -25,7 +25,8 @@ export async function saveUserPreferences(preferences: UserPreferences) {
     console.error("Error saving preferences:", error);
     return {
       success: false,
-      error: error instanceof Error ? error.message : "Failed to save preferences",
+      error:
+        error instanceof Error ? error.message : "Failed to save preferences",
     };
   }
 }
@@ -38,7 +39,9 @@ export async function getUserPreferences(): Promise<UserPreferences | null> {
 
     if (!user) return null;
 
-    const preferences = user.user_metadata?.travel_preferences as UserPreferences | undefined;
+    const preferences = user.user_metadata?.travel_preferences as
+      | UserPreferences
+      | undefined;
     return preferences || null;
   } catch (error) {
     console.error("Error getting preferences:", error);
