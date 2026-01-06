@@ -102,6 +102,35 @@ export default function OnboardingQuestionnaire({
 
       if (error) throw error;
 
+      // fetch recommendations from server and save to localStorage for the destinations page
+      try {
+        const res = await fetch("/api/recommendations", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            travel_style: preferences.travel_style,
+            budget_range: preferences.budget_range,
+            interests: preferences.interests,
+          }),
+        });
+
+        if (res.ok) {
+          const json = await res.json();
+          if (json?.recommendations) {
+            try {
+              localStorage.setItem(
+                "recommendations",
+                JSON.stringify(json.recommendations)
+              );
+            } catch (e) {
+              console.warn("Could not store recommendations locally", e);
+            }
+          }
+        }
+      } catch (e) {
+        console.warn("Recommendation fetch failed", e);
+      }
+
       onComplete();
       router.push("/destinations");
     } catch (error) {
@@ -219,7 +248,7 @@ export default function OnboardingQuestionnaire({
                 onClick={() => setStep(1)}
                 className="mt-6 mx-auto block text-gray-500 hover:text-gray-700"
               >
-                 Back
+                Back
               </button>
             </motion.div>
           )}
@@ -280,7 +309,7 @@ export default function OnboardingQuestionnaire({
                   onClick={() => setStep(2)}
                   className="px-6 py-3 text-gray-600 hover:text-gray-800 transition-colors"
                 >
-                   Back
+                  Back
                 </button>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
@@ -293,7 +322,7 @@ export default function OnboardingQuestionnaire({
                       : "bg-gray-black text-black cursor-not-allowed"
                   }`}
                 >
-                  Complete Setup 
+                  Complete Setup
                 </motion.button>
               </div>
             </motion.div>
