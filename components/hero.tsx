@@ -14,8 +14,12 @@ export default function Hero() {
         transition={{ duration: 1.5, ease: "easeOut" }}
         className="absolute inset-0 z-0"
       >
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 rounded-xl  z-10" />
-        <img src="/angkor-wat-sunrise-golden-hour-cambodia-temple.jpg" alt="Angkor Wat at sunrise" className="w-full h-full object-cover" />
+        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 dark:from-black/80 dark:via-black/60 rounded-xl z-10" />
+        <img
+          src="https://i.pinimg.com/1200x/ed/bf/73/edbf7353393cc3d039792dc89a0dd4b6.jpg"
+          alt="Angkor Wat at sunrise"
+          className="w-full h-full object-cover"
+        />
       </motion.div>
 
       {/* Content */}
@@ -25,9 +29,9 @@ export default function Hero() {
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.5, duration: 0.8 }}
         >
-          <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-bold text-white mb-6 text-balance">
+          <h1 className="font-serif text-6xl md:text-8xl lg:text-9xl font-bold text-white dark:text-white mb-6 text-balance">
             Discover
-            <span className="block text-primary">Cambodia</span>
+            <span className="block text-primary dark:text-primary-light">Cambodia</span>
           </h1>
         </motion.div>
 
@@ -35,7 +39,7 @@ export default function Hero() {
           initial={{ y: 30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.7, duration: 0.8 }}
-          className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl mx-auto leading-relaxed"
+          className="text-lg md:text-xl text-gray-200 dark:text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed"
         >
           Explore ancient temples, vibrant culture, and breathtaking landscapes in the Kingdom of Wonder
         </motion.p>
@@ -48,16 +52,13 @@ export default function Hero() {
           <Link href="/destinations">
             <Button
               size="lg"
-              className="bg-primary text-primary-foreground hover:bg-primary/90 text-lg px-8 py-6 rounded-full font-medium transition-all hover:scale-105"
+              className="bg-primary dark:bg-primary/90 text-primary-foreground dark:text-primary-dark hover:bg-primary/90 dark:hover:bg-primary/80 text-lg px-8 py-6 rounded-full font-medium transition-all hover:scale-105"
             >
               Start Exploring
             </Button>
           </Link>
         </motion.div>
       </div>
-
-    
-    
     </section>
   )
 }

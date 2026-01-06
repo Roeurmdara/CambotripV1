@@ -48,7 +48,7 @@ const handicrafts = [
 
 export default function HandicraftsGallery() {
   return (
-    <section className="py-32 px-6 bg-white">
+    <section className="py-32 px-6 bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.div
@@ -58,10 +58,10 @@ export default function HandicraftsGallery() {
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
-          <h2 className="text-6xl md:text-7xl font-light text-black tracking-tight mb-3">
+          <h2 className="text-6xl md:text-7xl font-light text-black dark:text-white tracking-tight mb-3">
             Handicrafts & Artisan Work
           </h2>
-          <p className="text-gray-500 text-base font-light max-w-md">
+          <p className="text-gray-500 dark:text-gray-300 text-base font-light max-w-md">
             Explore Cambodia's rich tradition of craftsmanship
           </p>
         </motion.div>
@@ -97,7 +97,7 @@ export default function HandicraftsGallery() {
                 >
                   <div className="group cursor-pointer">
                     {/* Image */}
-                    <div className="overflow-hidden mb-6 aspect-[4/3] bg-gray-200">
+                    <div className="overflow-hidden mb-6 aspect-[4/3] bg-gray-200 dark:bg-black">
                       <img
                         src={craft.image || "/placeholder.svg"}
                         alt={craft.name}
@@ -107,13 +107,13 @@ export default function HandicraftsGallery() {
                     
                     {/* Content */}
                     <div className="space-y-2">
-                      <p className="text-xs uppercase tracking-widest text-gray-400 font-light">
+                      <p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 font-light">
                         {craft.category}
                       </p>
-                      <h3 className="text-2xl font-light text-black group-hover:text-gray-600 transition-colors">
+                      <h3 className="text-2xl font-light text-black dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
                         {craft.name}
                       </h3>
-                      <p className="text-sm text-gray-500 font-light leading-relaxed">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 font-light leading-relaxed">
                         {craft.description}
                       </p>
                     </div>
@@ -124,12 +124,12 @@ export default function HandicraftsGallery() {
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-          <div className="swiper-button-prev-custom absolute left-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -ml-6">
+          <div className="swiper-button-prev-custom absolute left-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -ml-6">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
             </svg>
           </div>
-          <div className="swiper-button-next-custom absolute right-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -mr-6">
+          <div className="swiper-button-next-custom absolute right-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -mr-6">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
             </svg>
@@ -144,7 +144,7 @@ export default function HandicraftsGallery() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex justify-center"
         >
-          <button className="group inline-flex items-center gap-3 text-black hover:text-gray-600 transition-colors text-sm uppercase tracking-widest font-light border-b border-black hover:border-gray-600 pb-1">
+          <button className="group inline-flex items-center gap-3 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors text-sm uppercase tracking-widest font-light border-b border-black dark:border-white hover:border-gray-600 dark:hover:border-gray-300 pb-1">
             View All Crafts
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>

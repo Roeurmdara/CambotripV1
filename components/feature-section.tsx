@@ -1,4 +1,3 @@
-
 "use client";
 
 import React, { useState, useEffect } from "react";
@@ -66,8 +65,8 @@ export function FeatureSteps({
                     className={cn(
                       "w-12 h-12 rounded-full flex items-center justify-center border transition-all duration-300",
                       index === currentFeature
-                        ? "bg-black border-black text-white"
-                        : "bg-white border-gray-300 text-gray-400 group-hover:border-gray-400"
+                        ? "bg-black dark:bg-white border-black dark:border-white text-white dark:text-black"
+                        : "bg-white dark:bg-black border-gray-300 dark:border-gray-600 text-gray-400 dark:text-gray-300 group-hover:border-gray-400 dark:group-hover:border-gray-400"
                     )}
                     animate={{ scale: index === currentFeature ? 1.05 : 1 }}
                   >
@@ -81,25 +80,22 @@ export function FeatureSteps({
 
                 {/* Content */}
                 <div className="flex-1 pt-1">
-                  <p className="text-xs uppercase tracking-widest text-gray-400 font-light mb-2">
+                  <p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-300 font-light mb-2">
                     {feature.step}
                   </p>
-                  <h3 className="text-2xl font-light text-black mb-2 group-hover:text-gray-600 transition-colors">
+                  <h3 className="text-2xl font-light text-black dark:text-white mb-2 group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors">
                     {feature.title || feature.step}
                   </h3>
-                  <p className="text-sm text-gray-500 font-light leading-relaxed">
+                  <p className="text-sm text-gray-500 dark:text-gray-300 font-light leading-relaxed">
                     {feature.content}
                   </p>
-                  
-                  {/* Progress bar */}
-               
                 </div>
               </motion.div>
             ))}
           </div>
 
           {/* Right side - Image */}
-          <div className="order-1 md:order-2 relative h-[300px] md:h-[400px] lg:h-[450px] overflow-hidden bg-gray-200">
+          <div className={`order-1 md:order-2 relative overflow-hidden bg-gray-200 dark:bg-gray-800 ${imageHeight}`}>
             <AnimatePresence mode="wait">
               {features.map(
                 (feature, index) =>

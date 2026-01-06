@@ -5,6 +5,17 @@ import { motion } from "framer-motion"
 const festivals = [
   {
     month: "January",
+    name: "Victory Day over Genocide",
+    description:
+      "Commemorates the end of the Khmer Rouge regime in 1979 with national ceremonies.",
+    duration: "1 day",
+    startDay: 7,
+    endDay: 7,
+    location: "Nationwide",
+    image: "https://i.pinimg.com/1200x/23/65/0c/23650c5f85d0d550f8ddccbed557f8be.jpg",
+  },
+  {
+    month: "January/February",
     name: "Chinese New Year",
     description:
       "Celebrated by the Chinese-Cambodian community with vibrant dragon dances, fireworks, and family gatherings.",
@@ -13,6 +24,17 @@ const festivals = [
     endDay: 23,
     location: "Nationwide, especially Phnom Penh",
     image: "https://i.pinimg.com/736x/be/ce/b5/beceb50067ee77bf4151517ad6ba9ae7.jpg",
+  },
+  {
+    month: "February",
+    name: "Meak Bochea",
+    description:
+      "Important Buddhist festival commemorating a key teaching of Buddha.",
+    duration: "1 day",
+    startDay: 5,
+    endDay: 5,
+    location: "All temples nationwide",
+    image: "https://i.pinimg.com/1200x/ff/96/c7/ff96c770f588a0da819ed41cdc315cdb.jpg",
   },
   {
     month: "April",
@@ -72,19 +94,31 @@ const festivals = [
   {
     month: "November",
     name: "Independence Day",
-    description: "Commemorates Cambodia's independence from France in 1953 with parades and celebrations.",
+    description:
+      "Commemorates Cambodia's independence from France in 1953 with parades and celebrations.",
     duration: "1 day",
     startDay: 9,
     endDay: 9,
     location: "Independence Monument, Phnom Penh",
-    image: "https://i.pinimg.com/1200x/a7/da/c1/a7dac1281c34bfd476cd7963db6eb1e5.jpg",
+    image: "https://i.pinimg.com/736x/45/13/06/4513062966dd02a7457a08be8a702371.jpg",
   },
+  {
+    month: "October",
+    name: "King Norodom Sihamoni Coronation Day",
+    description:
+      "Celebration of the King’s coronation with traditional rituals and ceremonies.",
+    duration: "1 day",
+    startDay: 29,
+    endDay: 29,
+    location: "Royal Palace, Phnom Penh",
+    image: "https://izitour.com/media/ckeditor/ceremonie-couronnement-norodom-sihamoni.webp",
+  },
+];
 
-]
 
 export default function FestivalTimeline() {
   return (
-    <div className="grid md:grid-cols-2 gap-6">
+    <div className="grid md:grid-cols-2 gap-6 dark:bg-black">
       {festivals.map((festival, index) => (
         <motion.div
           key={festival.name}

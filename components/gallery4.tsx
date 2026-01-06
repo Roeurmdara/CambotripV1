@@ -98,7 +98,7 @@ const data: Gallery4Item[] = [
     description: "Another traditional form of shadow puppetry in Cambodia, emphasizing local cultural stories.",
     listedOn: "November 28, 2018",
     href: "#",
-    image: "https://tourismcambodia.net/wp-content/uploads/2024/08/Lakhon-Khol-Header.jpg",
+    image: "https://static.wixstatic.com/media/b71427_77449380f11647f3860670ce5e50d548~mv2.png/v1/fill/w_980,h_636,al_c,q_90,usm_0.66_1.00_0.01,enc_auto/b71427_77449380f11647f3860670ce5e50d548~mv2.png",
   },
   {
     id: "kun-lbokator",
@@ -118,7 +118,6 @@ const data: Gallery4Item[] = [
   },
 ];
 
-
 const Gallery4 = ({
   title = "Cambodia Heritage Sites",
   description = "Explore the rich cultural heritage of Cambodia through these iconic sites that showcase the nation's sites",
@@ -132,15 +131,10 @@ const Gallery4 = ({
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth < 640) {
-        setItemsPerView(1)
-      } else if (window.innerWidth < 1024) {
-        setItemsPerView(2)
-      } else {
-        setItemsPerView(3)
-      }
+      if (window.innerWidth < 640) setItemsPerView(1)
+      else if (window.innerWidth < 1024) setItemsPerView(2)
+      else setItemsPerView(3)
     }
-
     handleResize()
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
@@ -159,55 +153,32 @@ const Gallery4 = ({
   const scrollNext = () => {
     if (canScrollNext) {
       setDirection(1)
-      setCurrentIndex(currentIndex + 1)
+      setCurrentIndex(currentIndex + 3)
     }
   }
 
   const handleDragEnd = (e: any, info: any) => {
     setIsDragging(false)
     const threshold = 50
-    
-    if (info.offset.x < -threshold && canScrollNext) {
-      scrollNext()
-    } else if (info.offset.x > threshold && canScrollPrev) {
-      scrollPrev()
-    }
+    if (info.offset.x < -threshold && canScrollNext) scrollNext()
+    else if (info.offset.x > threshold && canScrollPrev) scrollPrev()
   }
 
   const visibleItems = items.slice(currentIndex, currentIndex + itemsPerView)
 
   const slideVariants = {
-    enter: (direction: number) => ({
-      x: direction > 0 ? 1000 : -1000,
-      opacity: 0
-    }),
-    center: {
-      x: 0,
-      opacity: 1
-    },
-    exit: (direction: number) => ({
-      x: direction > 0 ? -1000 : 1000,
-      opacity: 0
-    })
+    enter: (direction: number) => ({ x: direction > 0 ? 1000 : -1000, opacity: 0 }),
+    center: { x: 0, opacity: 1 },
+    exit: (direction: number) => ({ x: direction > 0 ? -1000 : 1000, opacity: 0 }),
   }
 
   return (
-    <section className="py-32 px-6 bg-white overflow-hidden">
+    <section className="py-32 px-6 bg-white dark:bg-black overflow-hidden">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8 }}
-          className="mb-20"
-        >
-          <h2 className="text-6xl md:text-7xl font-light text-black tracking-tight mb-3">
-            {title}
-          </h2>
-          <p className="text-gray-500 text-base font-light max-w-md">
-            {description}
-          </p>
+        <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.8 }} className="mb-20">
+          <h2 className="text-6xl md:text-7xl font-light text-black dark:text-white tracking-tight mb-3">{title}</h2>
+          <p className="text-gray-500 dark:text-gray-300 text-base font-light max-w-md">{description}</p>
         </motion.div>
 
         {/* Slider */}
@@ -221,10 +192,7 @@ const Gallery4 = ({
                 initial="enter"
                 animate="center"
                 exit="exit"
-                transition={{
-                  x: { type: "spring", stiffness: 300, damping: 30 },
-                  opacity: { duration: 0.3 }
-                }}
+                transition={{ x: { type: "spring", stiffness: 300, damping: 30 }, opacity: { duration: 0.3 } }}
                 drag="x"
                 dragConstraints={{ left: 0, right: 0 }}
                 dragElastic={0.2}
@@ -234,35 +202,15 @@ const Gallery4 = ({
               >
                 {visibleItems.map((item) => (
                   <div key={item.id}>
-                    <a 
-                      href={item.href} 
-                      className="group cursor-pointer block"
-                      onClick={(e) => isDragging && e.preventDefault()}
-                    >
-                      {/* Image */}
-                      <div className="overflow-hidden mb-6 aspect-[4/3] bg-gray-200">
-                        <img
-                          src={item.image || "/placeholder.svg"}
-                          alt={item.title}
-                          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
-                          draggable="false"
-                        />
+                    <a href={item.href} className="group cursor-pointer block" onClick={(e) => isDragging && e.preventDefault()}>
+                      <div className="overflow-hidden mb-6 aspect-[4/3] bg-gray-200 dark:bg-gray-800">
+                        <img src={item.image || "/placeholder.svg"} alt={item.title} className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105" draggable="false" />
                       </div>
-                      
-                      {/* Content */}
                       <div className="space-y-2">
-                        <p className="text-xs uppercase tracking-widest text-gray-400 font-light">
-                          UNESCO World Heritage
-                        </p>
-                        <h3 className="text-2xl font-light text-black group-hover:text-gray-600 transition-colors">
-                          {item.title}
-                        </h3>
-                        <p className="text-sm text-gray-500 font-light">
-                          <span className="font-semibold">Listed on:</span> {item.listedOn}
-                        </p>
-                        <p className="text-sm text-gray-500 font-light leading-relaxed">
-                          {item.description}
-                        </p>
+                        <p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-300 font-light">UNESCO World Heritage</p>
+                        <h3 className="text-2xl font-light text-black dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-400 transition-colors">{item.title}</h3>
+                        <p className="text-sm text-gray-500 dark:text-gray-300 font-light"><span className="font-semibold">Listed on:</span> {item.listedOn}</p>
+                        <p className="text-sm text-gray-500 dark:text-gray-300 font-light leading-relaxed">{item.description}</p>
                       </div>
                     </a>
                   </div>
@@ -271,28 +219,27 @@ const Gallery4 = ({
             </AnimatePresence>
           </div>
 
-          {/* Custom Navigation Buttons */}
+          {/* Navigation Buttons */}
           {canScrollPrev && (
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={scrollPrev}
-              className="absolute left-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -ml-6"
+              className="absolute left-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 -ml-6"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
               </svg>
             </motion.button>
           )}
-          
           {canScrollNext && (
             <motion.button
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={scrollNext}
-              className="absolute right-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -mr-6"
+              className="absolute right-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-gray-800 shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white dark:hover:bg-white dark:hover:text-black transition-all duration-300 -mr-6"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
@@ -310,25 +257,15 @@ const Gallery4 = ({
                 setDirection(index > currentIndex ? 1 : -1)
                 setCurrentIndex(index)
               }}
-              className={`h-2 rounded-full transition-all duration-300 ${
-                index === currentIndex 
-                  ? 'w-8 bg-black' 
-                  : 'w-2 bg-gray-300 hover:bg-gray-400'
-              }`}
+              className={`h-2 rounded-full transition-all duration-300 ${index === currentIndex ? 'w-8 bg-black dark:bg-white' : 'w-2 bg-gray-300 dark:bg-gray-600 hover:bg-gray-400 dark:hover:bg-gray-400'}`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
 
         {/* View All */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex justify-center"
-        >
-          <button className="group inline-flex items-center gap-3 text-black hover:text-gray-600 transition-colors text-sm uppercase tracking-widest font-light border-b border-black hover:border-gray-600 pb-1">
+        <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 0.8, delay: 0.5 }} className="flex justify-center">
+          <button className="group inline-flex items-center gap-3 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-400 transition-colors text-sm uppercase tracking-widest font-light border-b border-black dark:border-white hover:border-gray-600 dark:hover:border-gray-400 pb-1">
             View All
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>

@@ -68,13 +68,11 @@ const dishes = [
     image: "https://walkaboutmonkey.com/wp-content/uploads/2019/02/Prahok-Ktiss2-optimized.jpg",
     description: "Fish cooked with prahok (fermented fish paste) and herbs. Strongly flavored and iconic in Khmer cuisine.",
   }
-  
 ];
-
 
 export default function FoodGallery() {
   return (
-    <section className="py-32 px-6 bg-white">
+    <section className="py-32 px-6 bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.div
@@ -84,10 +82,10 @@ export default function FoodGallery() {
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
-          <h2 className="text-6xl md:text-7xl font-light text-black tracking-tight mb-3">
+          <h2 className="text-6xl md:text-7xl font-light text-black dark:text-white tracking-tight mb-3">
             Khmer Cuisine
           </h2>
-          <p className="text-gray-500 text-base font-light max-w-md">
+          <p className="text-gray-500 dark:text-gray-300 text-base font-light max-w-md">
             Discover the rich flavors of Cambodia
           </p>
         </motion.div>
@@ -97,7 +95,7 @@ export default function FoodGallery() {
           <Swiper
             modules={[Navigation, Autoplay]}
             spaceBetween={32}
-            slidesPerView={1}
+            slidesPerView={2}
             autoplay={{
               delay: 6000,
               disableOnInteraction: false,
@@ -123,23 +121,23 @@ export default function FoodGallery() {
                 >
                   <div className="group cursor-pointer">
                     {/* Image */}
-                    <div className="overflow-hidden mb-6 aspect-[4/3] bg-gray-200">
+                    <div className="overflow-hidden mb-6 aspect-[4/3] bg-gray-200 dark:bg-gray-700">
                       <img
                         src={dish.image || "/placeholder.svg"}
                         alt={dish.name}
                         className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                       />
                     </div>
-                    
+
                     {/* Content */}
                     <div className="space-y-2">
-                      <p className="text-xs uppercase tracking-widest text-gray-400 font-light">
+                      <p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 font-light">
                         {dish.category}
                       </p>
-                      <h3 className="text-2xl font-light text-black group-hover:text-gray-600 transition-colors">
+                      <h3 className="text-2xl font-light text-black dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
                         {dish.name}
                       </h3>
-                      <p className="text-sm text-gray-500 font-light leading-relaxed">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 font-light leading-relaxed">
                         {dish.description}
                       </p>
                     </div>
@@ -150,12 +148,12 @@ export default function FoodGallery() {
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-          <div className="swiper-button-prev-custom absolute left-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -ml-6">
+          <div className="swiper-button-prev-custom absolute left-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -ml-6">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
             </svg>
           </div>
-          <div className="swiper-button-next-custom absolute right-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -mr-6">
+          <div className="swiper-button-next-custom absolute right-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -mr-6">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
             </svg>
@@ -170,7 +168,7 @@ export default function FoodGallery() {
           transition={{ duration: 0.8, delay: 0.5 }}
           className="flex justify-center"
         >
-          <button className="group inline-flex items-center gap-3 text-black hover:text-gray-600 transition-colors text-sm uppercase tracking-widest font-light border-b border-black hover:border-gray-600 pb-1">
+          <button className="group inline-flex items-center gap-3 text-black dark:text-white hover:text-gray-600 dark:hover:text-gray-300 transition-colors text-sm uppercase tracking-widest font-light border-b border-black dark:border-white hover:border-gray-600 dark:hover:border-gray-300 pb-1">
             View All Dishes
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </button>

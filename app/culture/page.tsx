@@ -67,12 +67,12 @@ export default function CulturePage() {
   return (
     <>
       <Navigation />
-      <main className="min-h-screen">
+      <main className="min-h-screen dark:bg-black">
         {/* Hero Section */}
-        <section className="relative h-[700px] flex items-center justify-center overflow-hidden">
+        <section className="relative h-[700px] flex items-center justify-center overflow-hiddend dark:bg-black">
           <div className="absolute inset-0">
             <img
-              src="https://i.pinimg.com/1200x/03/05/60/030560cd1c8ed0d917087d7f3728b465.jpg"
+              src="https://i.pinimg.com/1200x/65/1c/e3/651ce30b77dddd7b5f6485b7d60b84dc.jpg"
               alt="Cambodian culture"
               className="w-full h-full object-cover"
             />
@@ -85,7 +85,7 @@ export default function CulturePage() {
             transition={{ duration: 1, ease: "easeOut" }}
             className="relative z-10 text-center px-4 max-w-4xl mx-auto"
           >
-            <h1 className="font-serif text-6xl md:text-8xl font-light text-white mb-6 tracking-tight">
+            <h1 className="font-serif text-6xl md:text-8xl font-light text-white mb-6 tracking-tight dark:text-white">
               Culture & Heritage
             </h1>
             <p className="text-white/90 text-xl md:text-2xl font-light">
@@ -113,7 +113,7 @@ export default function CulturePage() {
         </section>
 
         {/* Traditions Grid */}
-        <section className="py-20 px-4 bg-muted/30">
+        <section className="py-20 px-4 ">
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-1">
               {traditions.map((tradition, index) => (
@@ -152,7 +152,7 @@ export default function CulturePage() {
         </section>
 
         {/* Festival Timeline */}
-        <section className="py-24 px-4 bg-muted/30">
+        <section className="py-24 px-4 ">
           <div className="max-w-7xl mx-auto">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -161,7 +161,7 @@ export default function CulturePage() {
               transition={{ duration: 0.8 }}
               className="mb-16"
             >
-              <h2 className="text-6xl md:text-7xl font-light text-black tracking-tight mb-3">
+              <h2 className="text-6xl md:text-7xl font-light text-black tracking-tight mb-3 dark:text-white">
                 Khmer Cultural Festivals
               </h2>
               <p className="text-gray-500 text-base font-light max-w-md">

@@ -9,7 +9,7 @@ export default function ContactPage() {
         <div className="max-w-7xl mx-auto px-4 py-12">
           {/* Header */}
           <div className="mb-12">
-            <h1 className="text-6xl md:text-7xl font-light text-black tracking-tight mb-3">
+            <h1 className="text-6xl md:text-7xl font-light text-black tracking-tight mb-3 dark:text-white">
               Get in Touch
             </h1>
             <p className="text-gray-500 text-base font-light max-w-md">

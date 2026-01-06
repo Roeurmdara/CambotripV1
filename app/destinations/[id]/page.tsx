@@ -41,7 +41,7 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
       <>
         <Navigation />
         <div className="min-h-screen flex items-center justify-center">
-          <p className="text-gray-400">Loading...</p>
+          <p className="text-gray-800">Loading...</p>
         </div>
       </>
     );
@@ -123,7 +123,7 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                   viewport={{ once: true }}
                   transition={{ duration: 0.5 }}
                 >
-                  <h2 className="text-xs uppercase tracking-widest text-gray-400 mb-6">About</h2>
+                  <h2 className="text-xs uppercase tracking-widest text-gray-800 mb-6">About</h2>
                   <p className="text-gray-700 text-lg font-light leading-loose mb-20">
                     {destination.description}
                   </p>
@@ -135,12 +135,12 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.1 }}
                 >
-                  <h2 className="text-xs uppercase tracking-widest text-gray-400 mb-6">Highlights</h2>
+                  <h2 className="text-xs uppercase tracking-widest text-gray-800 mb-6">Highlights</h2>
                   <div className="space-y-3 mb-20">
                     {destination.highlights.map((highlight, index) => (
                       <div key={index} className="flex items-start gap-3">
-                        <CheckCircle className="w-4 h-4 text-gray-400 flex-shrink-0 mt-1" />
-                        <p className="text-gray-600 font-light leading-relaxed">{highlight}</p>
+                        <CheckCircle className="w-4 h-4 text-gray-800 flex-shrink-0 mt-1" />
+                        <p className="text-gray-500 font-light leading-relaxed">{highlight}</p>
                       </div>
                     ))}
                   </div>
@@ -154,7 +154,7 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                     transition={{ duration: 0.5, delay: 0.2 }}
                     className="mb-20"
                   >
-                    <h2 className="text-xs uppercase tracking-widest text-gray-400 mb-8 flex items-center gap-2">
+                    <h2 className="text-xs uppercase tracking-widest text-gray-800 mb-8 flex items-center gap-2">
                       <MapPinned className="w-4 h-4" />
                       Places to Visit
                     </h2>
@@ -163,9 +163,9 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                         <div key={index} className="border-b border-gray-100 pb-8">
                           <div className="flex items-start justify-between mb-3">
                             <h3 className="text-xl font-light">{place.name}</h3>
-                            <span className="text-xs text-gray-400 uppercase tracking-wider">{place.type}</span>
+                            <span className="text-xs text-gray-800 uppercase tracking-wider">{place.type}</span>
                           </div>
-                          <p className="text-gray-600 font-light leading-relaxed">{place.description}</p>
+                          <p className="text-gray-500 font-light leading-relaxed">{place.description}</p>
                         </div>
                       ))}
                     </div>
@@ -180,7 +180,7 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                     transition={{ duration: 0.5, delay: 0.3 }}
                     className="mb-20"
                   >
-                    <h2 className="text-xs uppercase tracking-widest text-gray-400 mb-8 flex items-center gap-2">
+                    <h2 className="text-xs uppercase tracking-widest text-gray-800 mb-8 flex items-center gap-2">
                       <Hotel className="w-4 h-4" />
                       Where to Stay
                     </h2>
@@ -192,7 +192,7 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                               <h3 className="text-xl font-light mb-1">{accommodation.name}</h3>
                               <p className="text-sm text-gray-500">{accommodation.price}</p>
                             </div>
-                            <span className="text-xs text-gray-400 uppercase tracking-wider">
+                            <span className="text-xs text-gray-800 uppercase tracking-wider">
                               {accommodation.type}
                             </span>
                           </div>
@@ -210,7 +210,7 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                     transition={{ duration: 0.5, delay: 0.4 }}
                     className="mb-20"
                   >
-                    <h2 className="text-xs uppercase tracking-widest text-gray-400 mb-8 flex items-center gap-2">
+                    <h2 className="text-xs uppercase tracking-widest text-gray-800 mb-8 flex items-center gap-2">
                       <UtensilsCrossed className="w-4 h-4" />
                       Where to Eat
                     </h2>
@@ -218,7 +218,7 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                       {destination.restaurants.map((restaurant, index) => (
                         <div key={index} className="border-b border-gray-100 pb-8">
                           <h3 className="text-xl font-light mb-2">{restaurant.name}</h3>
-                          <p className="text-sm text-gray-400 mb-3">
+                          <p className="text-sm text-gray-800 mb-3">
                             {restaurant.cuisine} · {restaurant.price}
                           </p>
                         </div>
@@ -235,26 +235,26 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                     transition={{ duration: 0.5, delay: 0.5 }}
                     className="mb-20"
                   >
-                    <h2 className="text-xs uppercase tracking-widest text-gray-400 mb-8 flex items-center gap-2">
+                    <h2 className="text-xs uppercase tracking-widest text-gray-800 mb-8 flex items-center gap-2">
                       <Navigation2 className="w-4 h-4" />
                       Getting Around
                     </h2>
                     <div className="space-y-8">
                       <div className="border-b border-gray-100 pb-6">
                         <h3 className="text-sm text-gray-500 mb-3">Getting There</h3>
-                        <p className="text-gray-600 font-light leading-relaxed">
+                        <p className="text-gray-500 font-light leading-relaxed">
                           {destination.transportation.gettingThere}
                         </p>
                       </div>
                       <div className="border-b border-gray-100 pb-6">
                         <h3 className="text-sm text-gray-500 mb-3">Getting Around</h3>
-                        <p className="text-gray-600 font-light leading-relaxed">
+                        <p className="text-gray-500 font-light leading-relaxed">
                           {destination.transportation.gettingAround}
                         </p>
                       </div>
                       <div className="border-b border-gray-100 pb-6">
                         <h3 className="text-sm text-gray-500 mb-3">Typical Costs</h3>
-                        <p className="text-gray-600 font-light leading-relaxed">{destination.transportation.costs}</p>
+                        <p className="text-gray-500 font-light leading-relaxed">{destination.transportation.costs}</p>
                       </div>
                     </div>
                   </motion.div>
@@ -266,12 +266,12 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                   viewport={{ once: true }}
                   transition={{ duration: 0.5, delay: 0.6 }}
                 >
-                  <h2 className="text-xs uppercase tracking-widest text-gray-400 mb-6">Travel Tips</h2>
+                  <h2 className="text-xs uppercase tracking-widest text-gray-800 mb-6">Travel Tips</h2>
                   <div className="space-y-3 mb-20">
                     {destination.tips.map((tip, index) => (
                       <div key={index} className="flex items-start gap-3">
-                        <Lightbulb className="w-4 h-4 text-gray-400 flex-shrink-0 mt-1" />
-                        <p className="text-gray-600 font-light leading-relaxed">{tip}</p>
+                        <Lightbulb className="w-4 h-4 text-gray-800 flex-shrink-0 mt-1" />
+                        <p className="text-gray-500 font-light leading-relaxed">{tip}</p>
                       </div>
                     ))}
                   </div>
@@ -284,15 +284,15 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                     viewport={{ once: true }}
                     transition={{ duration: 0.5, delay: 0.7 }}
                   >
-                    <h2 className="text-xs uppercase tracking-widest text-gray-400 mb-6 flex items-center gap-2">
+                    <h2 className="text-xs uppercase tracking-widest text-gray-800 mb-6 flex items-center gap-2">
                       <AlertCircle className="w-4 h-4" />
                       Health & Safety
                     </h2>
                     <div className="space-y-3">
                       {destination.health_and_safety.map((tip, index) => (
                         <div key={index} className="flex items-start gap-3">
-                          <AlertCircle className="w-4 h-4 text-gray-400 flex-shrink-0 mt-1" />
-                          <p className="text-gray-600 font-light leading-relaxed">{tip}</p>
+                          <AlertCircle className="w-4 h-4 text-gray-800 flex-shrink-0 mt-1" />
+                          <p className="text-gray-500 font-light leading-relaxed">{tip}</p>
                         </div>
                       ))}
                     </div>
@@ -310,26 +310,26 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                   className="sticky top-24"
                 >
                   <div className="border border-gray-200 p-8 mb-6">
-                    <h3 className="text-xs uppercase tracking-widest text-gray-400 mb-6">Quick Info</h3>
+                   
                     <div className="space-y-6">
                       <div>
-                        <p className="text-xs text-gray-400 mb-2 uppercase tracking-wider">Location</p>
-                        <p className="text-gray-700 font-light">{destination.location}</p>
+                        <p className="text-xs text-gray-800 mb-2 uppercase tracking-wider">Location</p>
+                        <p className="text-gray-500 font-light">{destination.location}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 mb-2 uppercase tracking-wider">Best Time</p>
-                        <p className="text-gray-700 font-light">{destination.best_time}</p>
+                        <p className="text-xs text-gray-800 mb-2 uppercase tracking-wider">Best Time</p>
+                        <p className="text-gray-500 font-light">{destination.best_time}</p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 mb-2 uppercase tracking-wider">Rating</p>
+                        <p className="text-xs text-gray-800 mb-2 uppercase tracking-wider">Rating</p>
                         <div className="flex items-center gap-2">
-                          <Star className="w-4 h-4 text-gray-400" />
+                          <Star className="w-4 h-4 text-gray-800" />
                           <span className="text-gray-700 font-light">{destination.rating} / 5</span>
                         </div>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-400 mb-2 uppercase tracking-wider">Coordinates</p>
-                        <p className="text-gray-700 font-light text-sm font-mono">
+                        <p className="text-xs text-gray-800 mb-2 uppercase tracking-wider">Coordinates</p>
+                        <p className="text-gray-500 font-light text-sm font-mono">
                           {destination.coordinates.lat}, {destination.coordinates.lng}
                         </p>
                       </div>
@@ -360,7 +360,7 @@ export default function DestinationPage({ params }: { params: Promise<{ id: stri
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5 }}
-                className="text-xs uppercase tracking-widest text-gray-400 mb-12 text-center flex items-center justify-center gap-2"
+                className="text-xs uppercase tracking-widest text-gray-800 mb-12 text-center flex items-center justify-center gap-2"
               >
                 <Camera className="w-4 h-4" />
                 Gallery

@@ -32,7 +32,7 @@ const architectureTypes = [
     image: "https://i.pinimg.com/1200x/81/09/ba/8109bac433e45fc951a82068efa22f02.jpg",
     description: "Ancient Khmer cities followed sacred geometry with temples at the center. Water management through barays (reservoirs) sustained large populations and rice cultivation.",
   },
-    {
+  {
     name: "Colonial Buildings",
     category: "Urban",
     image: "https://i.pinimg.com/736x/bd/85/67/bd8567e90c5199eb23dd5604338c0832.jpg",
@@ -71,7 +71,7 @@ const khmerSymbols = [
 
 export default function ArchitectureHeritage() {
   return (
-    <section className="py-32 px-6 bg-gradient-to-b from-white to-gray-50">
+    <section className="py-32 px-6 bg-white dark:bg-black">
       <div className="max-w-7xl mx-auto">
         {/* Title */}
         <motion.div
@@ -81,10 +81,10 @@ export default function ArchitectureHeritage() {
           transition={{ duration: 0.8 }}
           className="mb-20"
         >
-          <h2 className="text-6xl md:text-7xl font-light text-black tracking-tight mb-3">
+          <h2 className="text-6xl md:text-7xl font-light text-black dark:text-white tracking-tight mb-3">
             Architecture & Heritage
           </h2>
-          <p className="text-gray-500 text-base font-light max-w-2xl">
+          <p className="text-gray-500 dark:text-gray-300 text-base font-light max-w-2xl">
             From ancient temples to traditional homes, Khmer architecture reflects centuries of cultural evolution and spiritual devotion
           </p>
         </motion.div>
@@ -120,7 +120,7 @@ export default function ArchitectureHeritage() {
                 >
                   <div className="group cursor-pointer">
                     {/* Image */}
-                    <div className="overflow-hidden mb-6 aspect-[4/3] bg-gray-200">
+                    <div className="overflow-hidden mb-6 aspect-[4/3] bg-gray-200 dark:bg-gray-700">
                       <img
                         src={arch.image || "/placeholder.svg"}
                         alt={arch.name}
@@ -130,13 +130,13 @@ export default function ArchitectureHeritage() {
                     
                     {/* Content */}
                     <div className="space-y-2">
-                      <p className="text-xs uppercase tracking-widest text-gray-400 font-light">
+                      <p className="text-xs uppercase tracking-widest text-gray-400 dark:text-gray-500 font-light">
                         {arch.category}
                       </p>
-                      <h3 className="text-2xl font-light text-black group-hover:text-gray-600 transition-colors">
+                      <h3 className="text-2xl font-light text-black dark:text-white group-hover:text-gray-600 dark:group-hover:text-gray-300 transition-colors">
                         {arch.name}
                       </h3>
-                      <p className="text-sm text-gray-500 font-light leading-relaxed">
+                      <p className="text-sm text-gray-500 dark:text-gray-400 font-light leading-relaxed">
                         {arch.description}
                       </p>
                     </div>
@@ -147,12 +147,12 @@ export default function ArchitectureHeritage() {
           </Swiper>
 
           {/* Custom Navigation Buttons */}
-          <div className="swiper-button-prev-custom absolute left-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -ml-6">
+          <div className="swiper-button-prev-custom absolute left-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -ml-6">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M15 19l-7-7 7-7" />
             </svg>
           </div>
-          <div className="swiper-button-next-custom absolute right-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -mr-6">
+          <div className="swiper-button-next-custom absolute right-0 top-[35%] -translate-y-1/2 z-10 w-12 h-12 rounded-full bg-white dark:bg-gray-700 shadow-lg flex items-center justify-center cursor-pointer hover:bg-black hover:text-white transition-all duration-300 -mr-6">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 5l7 7-7 7" />
             </svg>
@@ -167,10 +167,10 @@ export default function ArchitectureHeritage() {
           transition={{ duration: 0.8 }}
           className="mb-12"
         >
-          <h3 className="text-4xl md:text-5xl font-light text-black tracking-tight mb-3">
+          <h3 className="text-4xl md:text-5xl font-light text-black dark:text-white tracking-tight mb-3">
             Sacred Symbols
           </h3>
-          <p className="text-gray-500 text-base font-light max-w-2xl mb-16">
+          <p className="text-gray-500 dark:text-gray-300 text-base font-light max-w-2xl mb-16">
             Key symbols found throughout Khmer art and architecture
           </p>
         </motion.div>
@@ -186,12 +186,12 @@ export default function ArchitectureHeritage() {
               transition={{ duration: 0.6, delay: index * 0.1 }}
               className="group"
             >
-              <div className="bg-white p-8 rounded-lg border border-gray-200 hover:border-gray-300 transition-all duration-300 hover:shadow-lg">
+              <div className="bg-white dark:bg-gray-800 p-8 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-gray-300 dark:hover:border-gray-500 transition-all duration-300 hover:shadow-lg">
                 <div className="flex items-start gap-6">
                   <div className="text-6xl flex-shrink-0">{item.symbol}</div>
                   <div className="space-y-2">
-                    <h4 className="text-xl font-light text-black">{item.name}</h4>
-                    <p className="text-sm text-gray-500 font-light leading-relaxed">
+                    <h4 className="text-xl font-light text-black dark:text-white">{item.name}</h4>
+                    <p className="text-sm text-gray-500 dark:text-gray-400 font-light leading-relaxed">
                       {item.meaning}
                     </p>
                   </div>
@@ -201,16 +201,6 @@ export default function ArchitectureHeritage() {
           ))}
         </div>
 
-        {/* View All */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="flex justify-center"
-        >
-       
-        </motion.div>
       </div>
     </section>
   )
