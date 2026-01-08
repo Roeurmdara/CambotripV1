@@ -264,7 +264,7 @@ export default function DestinationsPage() {
                 <span className="text-sm font-light text-muted-foreground">Personalized for You</span>
               </div>
             )}
-            <h1 className="font-light text-5xl md:text-6xl text-primary mb-6 text-balance">
+            <h1 className="font-light text-6xl md:text-7xl text-primary mb-6 text-balance">
               Discover Cambodia
             </h1>
             <p className="text-xl text-muted-foreground text-pretty font-light">
@@ -275,7 +275,7 @@ export default function DestinationsPage() {
         </section>
 
         {/* Filter Section */}
-        <section className="sticky top-16 z-20 bg-background/95 backdrop-blur-sm border-b border-border py-4 px-4">
+        <section className="sticky top-16 z-20 bg-background/95 backdrop-blur-sm   py-4 px-4">
           <div className="max-w-7xl mx-auto">
             <div className="flex flex-col md:flex-row gap-4">
               {/* Search */}
@@ -286,19 +286,19 @@ export default function DestinationsPage() {
                   placeholder="Search destinations..."
                   value={filters.search}
                   onChange={(e) => setFilters({ ...filters, search: e.target.value })}
-                  className="w-full pl-10 pr-4 py-2 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  className="w-full pl-10 pr-4 py-2 bg-card border border-border  focus:outline-none focus:ring-2 focus:ring-primary/50"
                 />
               </div>
 
               {/* Filter Toggle Button */}
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg hover:bg-card/80 transition-colors"
+                className="flex items-center gap-2 px-4 py-2 bg-card border border-border hover:bg-card/80 transition-colors"
               >
                 <Filter className="w-4 h-4" />
                 <span>Filters</span>
                 {hasActiveFilters() && (
-                  <span className="w-2 h-2 bg-primary rounded-full"></span>
+                  <span className="w-2 h-2 bg-primary "></span>
                 )}
               </button>
 
@@ -316,7 +316,7 @@ export default function DestinationsPage() {
 
             {/* Expanded Filters */}
             {showFilters && (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 p-4 bg-card/50 rounded-lg border border-border">
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 p-4 bg-card/50  border border-border">
                 {/* Category Filter */}
                 <div>
                   <label className="block text-sm font-light text-muted-foreground mb-2">
@@ -325,7 +325,7 @@ export default function DestinationsPage() {
                   <select
                     value={filters.category}
                     onChange={(e) => setFilters({ ...filters, category: e.target.value })}
-                    className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="w-full px-3 py-2 bg-background border border-border  focus:outline-none focus:ring-2 focus:ring-black dark:ring-white"
                   >
                     <option value="all">All Categories</option>
                     <option value="temples">Temples & Ancient Sites</option>
@@ -343,7 +343,7 @@ export default function DestinationsPage() {
                   <select
                     value={filters.minRating}
                     onChange={(e) => setFilters({ ...filters, minRating: Number(e.target.value) })}
-                    className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="w-full px-3 py-2 bg-background border border-border  focus:outline-none focus:ring-2 focus:ring-black dark:ring-white"
                   >
                     <option value="0">Any Rating</option>
                     <option value="3">3+ Stars</option>
@@ -360,7 +360,7 @@ export default function DestinationsPage() {
                   <select
                     value={filters.bestTime}
                     onChange={(e) => setFilters({ ...filters, bestTime: e.target.value })}
-                    className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                    className="w-full px-3 py-2 bg-background border border-border  focus:outline-none focus:ring-2 focus:ring-black dark:ring-white"
                   >
                     <option value="all">Any Time</option>
                     <option value="november">November</option>
