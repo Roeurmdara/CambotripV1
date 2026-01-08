@@ -101,19 +101,17 @@ export default function PracticalPage() {
               alt="Cambodia practical information"
               className="w-full h-full object-cover"
             />
-            <div className="absolute inset-0 bg-black/30" />
+            <div className="absolute inset-0 " />
           </div>
           <div className="relative z-20 text-center px-4">
-            <h1 className="text-5xl md:text-6xl font-light">
-              Practical Information for Travelers
-            </h1>
+          
           </div>
         </section>
 
         <div className="max-w-7xl mx-auto px-4 py-12">
           {/* Live Data Section */}
           <div className="mb-12">
-            <div className="flex items-center gap-2 mb-6 pb-2 border-b border-gray-300 dark:border-gray-700">
+            <div className="flex items-center gap-2 mb-6 pb-2 border-b border-gray-300 dark:border-white">
               <h2 className="text-2xl font-light">Live Information</h2>
             </div>
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
@@ -124,7 +122,7 @@ export default function PracticalPage() {
 
           {/* Essential Information */}
           <div className="mb-12">
-            <div className="flex items-center gap-2 mb-6 pb-2 border-b border-gray-300 dark:border-white">
+            <div className="flex items-center gap-2 mb-6 pb-2 border-b border-black dark:border-white">
               <h2 className="text-2xl font-light">Essential Information</h2>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -133,7 +131,7 @@ export default function PracticalPage() {
                 return (
                   <div
                     key={info.title}
-                    className="border border-gray-300 dark:border-gray-700 rounded-lg p-6 bg-gray-50 dark:bg-black"
+                    className="border border-black dark:border-white  p-6  dark:bg-black"
                   >
                     <div className="flex items-center gap-3 mb-4">
                       <Icon className="w-6 h-6 text-gray-700 dark:text-gray-200" />
@@ -164,7 +162,7 @@ export default function PracticalPage() {
               </h2>
             </div>
 
-            <div className="border border-black dark:border-white rounded-lg overflow-hidden">
+            <div className="border border-black dark:border-white  overflow-hidden">
               {/* Table Header */}
               <div className="grid grid-cols-3 bg-white dark:bg-black p-4 font-medium text-black dark:text-white">
                 <div>Khmer</div>
@@ -188,7 +186,7 @@ export default function PracticalPage() {
 
           {/* Safety Tips */}
           <div className="mb-12">
-            <div className="flex items-center gap-2 mb-6 pb-2 border-b border-gray-300 dark:border-white">
+            <div className="flex items-center gap-2 mb-6 pb-2 border-b border-black dark:border-white">
               <AlertCircle className="w-5 h-5 text-gray-700 dark:text-gray-200" />
               <h2 className="text-2xl font-light">Safety Tips</h2>
             </div>
@@ -196,7 +194,7 @@ export default function PracticalPage() {
               {safetyTips.map((item) => (
                 <div
                   key={item.title}
-                  className="border border-gray-300 dark:border-gray-700 rounded-lg p-6 bg-gray-50 dark:bg-black"
+                  className="border border-black dark:border-white  p-6 bg-gray-50 dark:bg-black"
                 >
                   <h3 className="text-lg font-medium mb-3">{item.title}</h3>
                   <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
