@@ -7,7 +7,7 @@ import { supabase } from "@/lib/supabaseClient";
 import { getPersonalizedDestinations } from "@/lib/recommendations";
 import Navigation from "@/components/navigation";
 import DotWave from "@/components/DotWave";
-import { MapPin, Star, ChevronLeft, ChevronRight, Sparkles } from "lucide-react";
+import { MapPin, Star, ChevronLeft, ChevronRight, Sparkles, Search, Filter, X } from "lucide-react";
 
 interface DestinationPreview {
   id: string;
@@ -25,29 +25,45 @@ interface CategorySection {
   destinations: DestinationPreview[];
 }
 
+interface FilterState {
+  search: string;
+  category: string;
+  minRating: number;
+  bestTime: string;
+}
+
 export default function DestinationsPage() {
   const [categories, setCategories] = useState<CategorySection[]>([]);
+  const [allDestinations, setAllDestinations] = useState<DestinationPreview[]>([]);
+  const [filteredCategories, setFilteredCategories] = useState<CategorySection[]>([]);
   const [loading, setLoading] = useState(true);
   const [isPersonalized, setIsPersonalized] = useState(false);
+  const [showFilters, setShowFilters] = useState(false);
+  const [filters, setFilters] = useState<FilterState>({
+    search: "",
+    category: "all",
+    minRating: 0,
+    bestTime: "all",
+  });
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const { data: { user } } = await supabase.auth.getUser();
         
-        let allDestinations: DestinationPreview[] = [];
+        let destinations: DestinationPreview[] = [];
 
         if (user) {
           const personalizedDests = await getPersonalizedDestinations(user.id);
           if (personalizedDests.length > 0) {
-            allDestinations = personalizedDests;
+            destinations = personalizedDests;
             setIsPersonalized(true);
           } else {
             const { data, error } = await supabase
               .from("destinations")
               .select("*");
             if (!error && data) {
-              allDestinations = data;
+              destinations = data;
             }
           }
         } else {
@@ -55,12 +71,14 @@ export default function DestinationsPage() {
             .from("destinations")
             .select("*");
           if (!error && data) {
-            allDestinations = data;
+            destinations = data;
           }
         }
 
-        const categorized = categorizeDestinations(allDestinations, isPersonalized);
+        setAllDestinations(destinations);
+        const categorized = categorizeDestinations(destinations, isPersonalized);
         setCategories(categorized);
+        setFilteredCategories(categorized);
       } catch (error) {
         console.error("Error:", error);
       } finally {
@@ -71,11 +89,93 @@ export default function DestinationsPage() {
     fetchData();
   }, [isPersonalized]);
 
+  useEffect(() => {
+    applyFilters();
+  }, [filters, allDestinations]);
+
+  const applyFilters = () => {
+    let filtered = [...allDestinations];
+
+    // Search filter
+    if (filters.search) {
+      const searchLower = filters.search.toLowerCase();
+      filtered = filtered.filter(d => 
+        d.name.toLowerCase().includes(searchLower) ||
+        d.location.toLowerCase().includes(searchLower) ||
+        d.description?.toLowerCase().includes(searchLower)
+      );
+    }
+
+    // Rating filter
+    if (filters.minRating > 0) {
+      filtered = filtered.filter(d => d.rating && d.rating >= filters.minRating);
+    }
+
+    // Best time filter
+    if (filters.bestTime !== "all") {
+      filtered = filtered.filter(d => 
+        d.best_time?.toLowerCase().includes(filters.bestTime.toLowerCase())
+      );
+    }
+
+    // Category filter
+    if (filters.category !== "all") {
+      filtered = filtered.filter(d => {
+        const cat = filters.category.toLowerCase();
+        if (cat === "temples") {
+          return d.name.toLowerCase().includes("temple") || 
+                 d.name.toLowerCase().includes("wat") ||
+                 d.name.toLowerCase().includes("angkor") ||
+                 d.description?.toLowerCase().includes("temple");
+        } else if (cat === "beaches") {
+          return d.location?.toLowerCase().includes("sihanoukville") ||
+                 d.location?.toLowerCase().includes("kep") ||
+                 d.location?.toLowerCase().includes("koh") ||
+                 d.name.toLowerCase().includes("beach") ||
+                 d.name.toLowerCase().includes("island") ||
+                 d.description?.toLowerCase().includes("beach");
+        } else if (cat === "cities") {
+          return d.location?.toLowerCase().includes("phnom penh") ||
+                 d.name.toLowerCase().includes("palace") ||
+                 d.name.toLowerCase().includes("museum") ||
+                 d.name.toLowerCase().includes("market");
+        } else if (cat === "nature") {
+          return d.name.toLowerCase().includes("park") ||
+                 d.name.toLowerCase().includes("mountain") ||
+                 d.name.toLowerCase().includes("waterfall") ||
+                 d.name.toLowerCase().includes("lake") ||
+                 d.description?.toLowerCase().includes("nature");
+        }
+        return true;
+      });
+    }
+
+    const categorized = categorizeDestinations(filtered, isPersonalized);
+    setFilteredCategories(categorized);
+  };
+
+  const resetFilters = () => {
+    setFilters({
+      search: "",
+      category: "all",
+      minRating: 0,
+      bestTime: "all",
+    });
+  };
+
+  const hasActiveFilters = () => {
+    return filters.search !== "" || 
+           filters.category !== "all" || 
+           filters.minRating > 0 || 
+           filters.bestTime !== "all";
+  };
+
   const categorizeDestinations = (destinations: DestinationPreview[], personalized: boolean) => {
     const categories: CategorySection[] = [];
 
+    // Always show personalized recommendations first if available, regardless of filters
     if (personalized) {
-      const topPicks = destinations
+      const topPicks = allDestinations
         .filter(d => d.personalScore && d.personalScore > 50)
         .slice(0, 10);
       
@@ -87,63 +187,65 @@ export default function DestinationsPage() {
       }
     }
 
-    const temples = destinations.filter(d => 
-      d.name.toLowerCase().includes("temple") || 
-      d.name.toLowerCase().includes("wat") ||
-      d.name.toLowerCase().includes("angkor") ||
-      d.description?.toLowerCase().includes("temple")
-    );
-
-    const beaches = destinations.filter(d => 
-      d.location?.toLowerCase().includes("sihanoukville") ||
-      d.location?.toLowerCase().includes("kep") ||
-      d.location?.toLowerCase().includes("koh") ||
-      d.name.toLowerCase().includes("beach") ||
-      d.name.toLowerCase().includes("island") ||
-      d.description?.toLowerCase().includes("beach")
-    );
-
-    const cities = destinations.filter(d => 
-      d.location?.toLowerCase().includes("phnom penh") ||
-      d.name.toLowerCase().includes("palace") ||
-      d.name.toLowerCase().includes("museum") ||
-      d.name.toLowerCase().includes("market")
-    );
-
-    const nature = destinations.filter(d => 
-      d.name.toLowerCase().includes("park") ||
-      d.name.toLowerCase().includes("mountain") ||
-      d.name.toLowerCase().includes("waterfall") ||
-      d.name.toLowerCase().includes("lake") ||
-      d.description?.toLowerCase().includes("nature")
-    );
-
-    if (temples.length > 0) {
-      categories.push({ title: "Temples & Ancient Sites", destinations: temples });
-    }
-    
-    if (beaches.length > 0) {
-      categories.push({ title: "Beaches & Islands", destinations: beaches });
-    }
-    
-    if (cities.length > 0) {
-      categories.push({ title: "Cities & Culture", destinations: cities });
-    }
-    
-    if (nature.length > 0) {
-      categories.push({ title: "Nature & Adventure", destinations: nature });
+    if (filters.category === "all" || filters.category === "temples") {
+      const temples = destinations.filter(d => 
+        d.name.toLowerCase().includes("temple") || 
+        d.name.toLowerCase().includes("wat") ||
+        d.name.toLowerCase().includes("angkor") ||
+        d.description?.toLowerCase().includes("temple")
+      );
+      if (temples.length > 0) {
+        categories.push({ title: "Temples & Ancient Sites", destinations: temples });
+      }
     }
 
-    const categorizedIds = new Set([
-      ...temples.map(d => d.id),
-      ...beaches.map(d => d.id),
-      ...cities.map(d => d.id),
-      ...nature.map(d => d.id),
-    ]);
+    if (filters.category === "all" || filters.category === "beaches") {
+      const beaches = destinations.filter(d => 
+        d.location?.toLowerCase().includes("sihanoukville") ||
+        d.location?.toLowerCase().includes("kep") ||
+        d.location?.toLowerCase().includes("koh") ||
+        d.name.toLowerCase().includes("beach") ||
+        d.name.toLowerCase().includes("island") ||
+        d.description?.toLowerCase().includes("beach")
+      );
+      if (beaches.length > 0) {
+        categories.push({ title: "Beaches & Islands", destinations: beaches });
+      }
+    }
 
-    const remaining = destinations.filter(d => !categorizedIds.has(d.id));
-    if (remaining.length > 0) {
-      categories.push({ title: "More Destinations", destinations: remaining });
+    if (filters.category === "all" || filters.category === "cities") {
+      const cities = destinations.filter(d => 
+        d.location?.toLowerCase().includes("phnom penh") ||
+        d.name.toLowerCase().includes("palace") ||
+        d.name.toLowerCase().includes("museum") ||
+        d.name.toLowerCase().includes("market")
+      );
+      if (cities.length > 0) {
+        categories.push({ title: "Cities & Culture", destinations: cities });
+      }
+    }
+
+    if (filters.category === "all" || filters.category === "nature") {
+      const nature = destinations.filter(d => 
+        d.name.toLowerCase().includes("park") ||
+        d.name.toLowerCase().includes("mountain") ||
+        d.name.toLowerCase().includes("waterfall") ||
+        d.name.toLowerCase().includes("lake") ||
+        d.description?.toLowerCase().includes("nature")
+      );
+      if (nature.length > 0) {
+        categories.push({ title: "Nature & Adventure", destinations: nature });
+      }
+    }
+
+    if (filters.category === "all") {
+      const categorizedIds = new Set(
+        categories.flatMap(cat => cat.destinations.map(d => d.id))
+      );
+      const remaining = destinations.filter(d => !categorizedIds.has(d.id));
+      if (remaining.length > 0) {
+        categories.push({ title: "More Destinations", destinations: remaining });
+      }
     }
 
     return categories;
@@ -172,20 +274,140 @@ export default function DestinationsPage() {
           </div>
         </section>
 
+        {/* Filter Section */}
+        <section className="sticky top-16 z-20 bg-background/95 backdrop-blur-sm border-b border-border py-4 px-4">
+          <div className="max-w-7xl mx-auto">
+            <div className="flex flex-col md:flex-row gap-4">
+              {/* Search */}
+              <div className="flex-1 relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-muted-foreground" />
+                <input
+                  type="text"
+                  placeholder="Search destinations..."
+                  value={filters.search}
+                  onChange={(e) => setFilters({ ...filters, search: e.target.value })}
+                  className="w-full pl-10 pr-4 py-2 bg-card border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                />
+              </div>
+
+              {/* Filter Toggle Button */}
+              <button
+                onClick={() => setShowFilters(!showFilters)}
+                className="flex items-center gap-2 px-4 py-2 bg-card border border-border rounded-lg hover:bg-card/80 transition-colors"
+              >
+                <Filter className="w-4 h-4" />
+                <span>Filters</span>
+                {hasActiveFilters() && (
+                  <span className="w-2 h-2 bg-primary rounded-full"></span>
+                )}
+              </button>
+
+              {/* Reset Filters */}
+              {hasActiveFilters() && (
+                <button
+                  onClick={resetFilters}
+                  className="flex items-center gap-2 px-4 py-2 text-muted-foreground hover:text-foreground transition-colors"
+                >
+                  <X className="w-4 h-4" />
+                  <span>Clear</span>
+                </button>
+              )}
+            </div>
+
+            {/* Expanded Filters */}
+            {showFilters && (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4 p-4 bg-card/50 rounded-lg border border-border">
+                {/* Category Filter */}
+                <div>
+                  <label className="block text-sm font-light text-muted-foreground mb-2">
+                    Category
+                  </label>
+                  <select
+                    value={filters.category}
+                    onChange={(e) => setFilters({ ...filters, category: e.target.value })}
+                    className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  >
+                    <option value="all">All Categories</option>
+                    <option value="temples">Temples & Ancient Sites</option>
+                    <option value="beaches">Beaches & Islands</option>
+                    <option value="cities">Cities & Culture</option>
+                    <option value="nature">Nature & Adventure</option>
+                  </select>
+                </div>
+
+                {/* Rating Filter */}
+                <div>
+                  <label className="block text-sm font-light text-muted-foreground mb-2">
+                    Minimum Rating
+                  </label>
+                  <select
+                    value={filters.minRating}
+                    onChange={(e) => setFilters({ ...filters, minRating: Number(e.target.value) })}
+                    className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  >
+                    <option value="0">Any Rating</option>
+                    <option value="3">3+ Stars</option>
+                    <option value="4">4+ Stars</option>
+                    <option value="4.5">4.5+ Stars</option>
+                  </select>
+                </div>
+
+                {/* Best Time Filter */}
+                <div>
+                  <label className="block text-sm font-light text-muted-foreground mb-2">
+                    Best Time to Visit
+                  </label>
+                  <select
+                    value={filters.bestTime}
+                    onChange={(e) => setFilters({ ...filters, bestTime: e.target.value })}
+                    className="w-full px-3 py-2 bg-background border border-border rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  >
+                    <option value="all">Any Time</option>
+                    <option value="november">November</option>
+                    <option value="december">December</option>
+                    <option value="january">January</option>
+                    <option value="february">February</option>
+                    <option value="year-round">Year Round</option>
+                  </select>
+                </div>
+              </div>
+            )}
+          </div>
+        </section>
+
+        {/* Results Count */}
+        {!loading && (
+          <section className="py-4 px-4">
+            <div className="max-w-7xl mx-auto">
+              <p className="text-sm text-muted-foreground">
+                {filteredCategories.reduce((acc, cat) => acc + cat.destinations.length, 0)} destinations found
+              </p>
+            </div>
+          </section>
+        )}
+
         {/* Categories Sections */}
         {loading ? (
           <div className="flex items-center justify-center min-h-[300px]">
             <DotWave />
           </div>
-        ) : categories.length === 0 ? (
+        ) : filteredCategories.length === 0 ? (
           <section className="py-12 px-4">
-            <p className="text-center text-muted-foreground">
-              No destinations available.
-            </p>
+            <div className="text-center">
+              <p className="text-muted-foreground mb-4">
+                No destinations match your filters.
+              </p>
+              <button
+                onClick={resetFilters}
+                className="px-6 py-2 bg-primary text-primary-foreground rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Reset Filters
+              </button>
+            </div>
           </section>
         ) : (
           <div className="space-y-16 pb-20">
-            {categories.map((category, idx) => (
+            {filteredCategories.map((category, idx) => (
               <CategoryRow 
                 key={idx} 
                 category={category} 
@@ -241,7 +463,7 @@ function CategoryRow({ category, isPersonalized }: { category: CategorySection; 
   const scroll = (direction: "left" | "right") => {
     if (scrollRef.current) {
       const cardWidth = scrollRef.current.querySelector('a')?.clientWidth || 300;
-      const scrollAmount = cardWidth + 24; // 24px = gap-6
+      const scrollAmount = cardWidth + 24;
       scrollRef.current.scrollBy({
         left: direction === "left" ? -scrollAmount : scrollAmount,
         behavior: "smooth",
@@ -253,13 +475,11 @@ function CategoryRow({ category, isPersonalized }: { category: CategorySection; 
   return (
     <section className="py-12">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Section Header */}
         <h2 className="font-light text-3xl md:text-4xl text-primary mb-6">
           {category.title}
         </h2>
 
         <div className="relative group/section">
-          {/* Left Arrow */}
           {canScrollLeft && (
             <button
               onClick={() => scroll("left")}
@@ -270,7 +490,6 @@ function CategoryRow({ category, isPersonalized }: { category: CategorySection; 
             </button>
           )}
 
-          {/* Right Arrow */}
           {canScrollRight && (
             <button
               onClick={() => scroll("right")}
@@ -281,7 +500,6 @@ function CategoryRow({ category, isPersonalized }: { category: CategorySection; 
             </button>
           )}
 
-          {/* Scrollable Container */}
           <div
             ref={scrollRef}
             onScroll={checkScroll}
@@ -299,7 +517,6 @@ function CategoryRow({ category, isPersonalized }: { category: CategorySection; 
                   href={`/destinations/${destination.id}`}
                   className="group/card block"
                 >
-                  {/* Image */}
                   <div className="relative h-56 overflow-hidden mb-4">
                     {isPersonalized && destination.personalScore && destination.personalScore > 50 && (
                       <div className="absolute top-3 right-3 bg-primary text-primary-foreground px-2 py-1 rounded text-xs font-light z-10 flex items-center gap-1">
@@ -315,7 +532,6 @@ function CategoryRow({ category, isPersonalized }: { category: CategorySection; 
                     />
                   </div>
 
-                  {/* Content */}
                   <div className="space-y-2">
                     <div className="text-xs uppercase tracking-wider text-muted-foreground">
                       <MapPin className="w-3 h-3 inline mr-1" />
